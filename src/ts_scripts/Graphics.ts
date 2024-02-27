@@ -4,7 +4,13 @@ class Graphics {
     private objects: Entity[] = [];
     private canvas: HTMLCanvasElement | null = null;
     private static instance: Graphics | null = null;
-    private constructor() { }
+    private constructor() {
+        this.update();
+    }
+
+    private update = (): void => {
+        setInterval(this.renderObjects, 10);
+    }
 
     public static getInstance = (): Graphics => {
         if (Graphics.instance === null) {
@@ -13,10 +19,15 @@ class Graphics {
         return Graphics.instance;
     }
     public setCanvas = (canvas: HTMLCanvasElement | null) => { this.canvas = canvas; }
-    public addObject = (obj: Entity) => { this.objects.push(obj); }
+    public addObjects = (obj: Entity | Entity[]) => {
+        if (Array.isArray(obj)) {
+            this.objects = [...this.objects, ...obj];
+            return;
+        }
+        this.objects.push(obj);
+    }
     public renderObjects = (): void => {
         if (this.canvas === null) {
-            console.error('Canvas is not initialized\nUse setCanvas(canvas: HTMLCanvasElement) to initialize canvas');
             return;
         }
         let ctx: CanvasRenderingContext2D | null = this.canvas.getContext('2d');

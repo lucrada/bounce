@@ -5,9 +5,9 @@ class Ball extends Entity {
     private _radius: number;
     private _color: string;
 
-    public constructor(x: number, y: number, radius: number = 10, color: string = 'red') {
-        let initVelocity: Vector = { x: 0, y: 0 };
-        super(x, y, initVelocity);
+    public constructor(position: Vector, radius: number = 10, color: string = 'red') {
+        let initVelocity: Vector = { x: 20, y: 0 };
+        super(position, initVelocity);
         this._radius = radius;
         this._color = color;
     }
@@ -23,7 +23,7 @@ class Ball extends Entity {
             return;
         }
         ctx.beginPath();
-        ctx.arc(this._x, this._y, this._radius, 0, 2 * Math.PI);
+        ctx.arc(this._position.x, this._position.y, this._radius, 0, 2 * Math.PI);
         ctx.fillStyle = this._color;
         ctx.fill();
         ctx.strokeStyle = 'black';
