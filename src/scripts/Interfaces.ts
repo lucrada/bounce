@@ -1,1 +1,3 @@
-export interface Vector { x: number, y: number };
+export interface Drawable {
+    draw: (ctx: CanvasRenderingContext2D) => void;
+}
