@@ -1,0 +1,21 @@
+body {
+    margin: 0;
+    padding: 0;
+    background-color: teal;
+}
+
+.container {
+    display: flex;
+    flex: 1;
+    height: 100vh;
+    justify-content: center;
+    align-items: center;
+}
+
+.screen {
+    border: 3px solid #000;
+    background-color: gainsboro;
+    width: 800px;
+    height: 700px;
+    border-radius: 5px;
+}
