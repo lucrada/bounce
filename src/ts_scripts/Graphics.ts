@@ -6,13 +6,13 @@ class Graphics {
     private static instance: Graphics | null = null;
     private constructor() { }
 
-    public static getGraphics = (): Graphics => {
+    public static getInstance = (): Graphics => {
         if (Graphics.instance === null) {
             Graphics.instance = new Graphics();
         }
         return Graphics.instance;
     }
-    public setCanvas = (canvas: HTMLCanvasElement) => { this.canvas = canvas; }
+    public setCanvas = (canvas: HTMLCanvasElement | null) => { this.canvas = canvas; }
     public addObject = (obj: Entity) => { this.objects.push(obj); }
     public renderObjects = (): void => {
         if (this.canvas === null) {

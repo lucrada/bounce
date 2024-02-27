@@ -22,10 +22,14 @@ class Ball extends Entity {
             console.error('ctx is null');
             return;
         }
-        ctx.fillStyle = this._color;
         ctx.beginPath();
-        ctx.arc(this._x, this._y, this._radius, 0, 2 * Math.PI, false);
+        ctx.arc(this._x, this._y, this._radius, 0, 2 * Math.PI);
+        ctx.fillStyle = this._color;
         ctx.fill();
+        ctx.strokeStyle = 'black';
+        ctx.lineWidth = 1;
+        ctx.stroke();
+        ctx.closePath();
     }
 };
 
