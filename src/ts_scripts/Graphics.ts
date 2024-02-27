@@ -20,6 +20,9 @@ class Graphics {
             return;
         }
         let ctx: CanvasRenderingContext2D | null = this.canvas.getContext('2d');
+        if (ctx) {
+            ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
+        }
         this.objects.forEach(object => object.draw(ctx));
     }
 };
