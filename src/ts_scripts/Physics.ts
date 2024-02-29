@@ -1,7 +1,7 @@
 import Ball from "./Ball";
 import Entity from "./Entity";
 import { PhysicsObjectType, Vector } from "./Types";
-import { vectorAdd, vectorScalarMultiply } from "./VectorMath";
+import { getUnitVector, vectorAdd, vectorMagnitude, vectorScalarMultiply } from "./VectorMath";
 
 class Physics {
     private readonly GRAVITY: Vector = { x: 0, y: 5 };
@@ -43,16 +43,26 @@ class Physics {
     public applyGravity = (obj: Entity): void => {
         this.linearlyAccelerate(obj, this.GRAVITY);
     }
+    public applyAirDrag = (obj: Entity): void => {
+        let airDragMagnitude: number = obj.getAirDragCoeff() * vectorMagnitude(obj.getCurrentVelocity());
+        let airDragVector = vectorScalarMultiply(getUnitVector(obj.getCurrentVelocity()), airDragMagnitude);
+        this.applyForce(obj, airDragVector);
+    }
+    public applyForce = (obj: Entity, force: Vector) => {
+        this.linearlyAccelerate(obj, vectorScalarMultiply(force, obj.getMass()));
+    }
     public handleWallCollision = (obj: Ball | unknown): void => {
         let objectCrossedBottom: boolean = false;
         let objectCrossedRight: boolean = false;
         let objectCrossedTop: boolean = false;
         let objectCrossedLeft: boolean = false;
+
         if (obj instanceof Ball) {
             objectCrossedBottom = obj.getCurrentPosition().y + obj.radius() > this.worldDimension!.y;
             objectCrossedTop = obj.getCurrentPosition().y - obj.radius() < 0;
             objectCrossedRight = obj.getCurrentPosition().x + obj.radius() > this.worldDimension!.x;
             objectCrossedLeft = obj.getCurrentPosition().x - obj.radius() < 0;
+
             if (objectCrossedBottom || objectCrossedTop) {
                 let nudgedYPosition: number = objectCrossedBottom ? this.worldDimension!.y - obj.radius() : obj.radius();
                 obj.setPosition({ x: obj.getCurrentPosition().x, y: nudgedYPosition })
@@ -71,6 +81,7 @@ class Physics {
         }
         this.objects.forEach(object => {
             this.applyGravity(object);
+            this.applyAirDrag(object);
             this.linearlyTranslate(object, object.getCurrentVelocity());
             this.handleWallCollision(object);
         });

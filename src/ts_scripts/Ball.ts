@@ -6,7 +6,7 @@ class Ball extends Entity {
     private _color: string;
 
     public constructor(position: Vector, radius: number = 10, color: string = 'red') {
-        let initVelocity: Vector = { x: 20, y: 0 };
+        let initVelocity: Vector = { x: 0, y: 0 };
         super(position, initVelocity);
         this._radius = radius;
         this._color = color;
