@@ -7,7 +7,7 @@ abstract class Entity implements Drawable {
     protected _velocity: Vector;
     protected _coeffRestituition: number = 1;
     protected _coeffFriction: number = 0.5;
-    protected _airDragCoeff: number = 0.01;
+    protected _airDragCoeff: number = 0.005;
 
     public constructor(position: Vector, velocity: Vector) {
         this._position = position;

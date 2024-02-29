@@ -45,11 +45,11 @@ class Physics {
     }
     public applyAirDrag = (obj: Entity): void => {
         let airDragMagnitude: number = obj.getAirDragCoeff() * vectorMagnitude(obj.getCurrentVelocity());
-        let airDragVector = vectorScalarMultiply(getUnitVector(obj.getCurrentVelocity()), airDragMagnitude);
+        let airDragVector = vectorScalarMultiply(getUnitVector(obj.getCurrentVelocity()), -1 * airDragMagnitude);
         this.applyForce(obj, airDragVector);
     }
     public applyForce = (obj: Entity, force: Vector) => {
-        this.linearlyAccelerate(obj, vectorScalarMultiply(force, obj.getMass()));
+        this.linearlyAccelerate(obj, vectorScalarMultiply(force, 1 / obj.getMass()));
     }
     public handleWallCollision = (obj: Ball | unknown): void => {
         let objectCrossedBottom: boolean = false;
